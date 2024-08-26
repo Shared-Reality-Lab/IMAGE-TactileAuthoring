@@ -50,6 +50,13 @@ class LeftPanel {
     }
   }
 
+  clickAnnotate () {
+    if (this.updateLeftPanel('tool_annot')) {
+      // this.editor.workarea.style.cursor = 'auto'
+      this.editor.svgCanvas.setMode('annotate')
+    }
+  }
+
   /**
    *
    * @returns {void}
@@ -203,6 +210,7 @@ class LeftPanel {
     this.editor.$svgEditor.append(template.content.cloneNode(true))
     // register actions for left panel
     $click($id('tool_select'), this.clickSelect.bind(this))
+    /*$click($id('tool_annot'), this.clickAnnotate.bind(this))
     $click($id('tool_fhpath'), this.clickFHPath.bind(this))
     $click($id('tool_text'), this.clickText.bind(this))
     $click($id('tool_image'), this.clickImage.bind(this))
@@ -217,7 +225,7 @@ class LeftPanel {
     $click($id('tool_fhrect'), this.clickFHRect.bind(this))
     $click($id('tool_ellipse'), this.clickEllipse.bind(this))
     $click($id('tool_circle'), this.clickCircle.bind(this))
-    $click($id('tool_fhellipse'), this.clickFHEllipse.bind(this))
+    $click($id('tool_fhellipse'), this.clickFHEllipse.bind(this))*/
   }
 }
 

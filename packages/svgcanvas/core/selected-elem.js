@@ -588,6 +588,7 @@ const _getNormalDistances = (type, selectedElements, bboxes, minx, maxx, miny, m
  * @returns {void}
  */
 const deleteSelectedElements = () => {
+  deleteExtras()
   const selectedElements = svgCanvas.getSelectedElements()
   const batchCmd = new BatchCommand('Delete Elements')
   const selectedCopy = [] // selectedElements is being deleted
@@ -619,6 +620,19 @@ const deleteSelectedElements = () => {
   }
   svgCanvas.call('changed', selectedCopy)
   svgCanvas.clearSelection()
+}
+
+const deleteExtras = () => {
+  const selectedElements = svgCanvas.getSelectedElements()
+  selectedElements.forEach(selected => {
+    if (selected.nodeName === 'rect') {
+      const el = document.querySelector('[data-image-id=' + selected.id + ']')
+      svgCanvas.addToSelection([el])
+    } else if (selected.nodeName === 'text') {
+      const el = document.getElementById(selected.getAttribute('data-image-id'))
+      svgCanvas.addToSelection([el])
+    }
+  })
 }
 
 /**

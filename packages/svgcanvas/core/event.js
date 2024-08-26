@@ -162,6 +162,12 @@ const mouseMoveEvent = (evt) => {
         const deltaThresholdReached = Math.abs(dx) > deltaThreshold || Math.abs(dy) > deltaThreshold
         moveSelectionThresholdReached = moveSelectionThresholdReached || deltaThresholdReached
 
+        selectedElements.forEach((el) => {
+          const id = el.getAttribute('id')
+          const element = document.querySelector('[data-image-id=' + id + ']')
+          const bbox = svgCanvas.getBBox(element)
+          svgCanvas.assignAttributes(element, { x: el.getAttribute('x'), y: (el.getAttribute('y') - (bbox.height / 2)) })
+        })
         if (moveSelectionThresholdReached) {
           selectedElements.forEach((el) => {
             if (el) {
@@ -348,6 +354,38 @@ const mouseMoveEvent = (evt) => {
       shape.setAttribute('y2', y2)
       break
     }
+    /* case 'annotate':{
+      const maintainAspectRatio = (evt.shiftKey)
+
+      let
+        w = Math.abs(x - svgCanvas.getStartX())
+      let h = Math.abs(y - svgCanvas.getStartY())
+      let newX; let newY
+      if (maintainAspectRatio) {
+        w = h = Math.max(w, h)
+        newX = svgCanvas.getStartX() < x ? svgCanvas.getStartX() : svgCanvas.getStartX() - w
+        newY = svgCanvas.getStartY() < y ? svgCanvas.getStartY() : svgCanvas.getStartY() - h
+      } else {
+        newX = Math.min(svgCanvas.getStartX(), x)
+        newY = Math.min(svgCanvas.getStartY(), y)
+      }
+
+      if (svgCanvas.getCurConfig().gridSnapping) {
+        w = snapToGrid(w)
+        h = snapToGrid(h)
+        newX = snapToGrid(newX)
+        newY = snapToGrid(newY)
+      }
+
+      assignAttributes(shape, {
+        width: w,
+        height: h,
+        x: newX,
+        y: newY
+      }, 1000)
+
+      break
+    } */
     case 'foreignObject': // fall through
     case 'square':
     case 'rect':
@@ -570,6 +608,7 @@ const mouseOutEvent = () => {
 * @returns {void}
 */
 const mouseUpEvent = (evt) => {
+  // console.warn(svgCanvas.getCurrentMode())
   moveSelectionThresholdReached = false
   if (evt.button === 2) { return }
   if (!svgCanvas.getStarted()) { return }
@@ -665,6 +704,12 @@ const mouseUpEvent = (evt) => {
             el.removeAttribute('style')
           })
         }
+        selectedElements.forEach((el) => {
+          const id = el.getAttribute('id')
+          const element = document.querySelector('[data-image-id=' + id + ']')
+          const bbox = svgCanvas.getBBox(element)
+          svgCanvas.assignAttributes(element, { x: el.getAttribute('x'), y: (el.getAttribute('y') - (bbox.height / 2)) })
+        })
       }
       return
     case 'zoom': {
@@ -706,6 +751,17 @@ const mouseUpEvent = (evt) => {
       keep = (x1 !== x2 || y1 !== y2)
     }
       break
+    /* case 'annotate':{
+      const width = element.getAttribute('width')
+      const height = element.getAttribute('height')
+      const widthNum = Number(width)
+      const heightNum = Number(height)
+      keep = widthNum >= 1 || heightNum >= 1
+      if (!element.hasAttribute('data-image-label')) {
+        console.warn('Execute label entry')
+      }
+    }
+      break */
     case 'foreignObject':
     case 'square':
     case 'rect':
@@ -716,6 +772,9 @@ const mouseUpEvent = (evt) => {
       const widthNum = Number(width)
       const heightNum = Number(height)
       keep = widthNum >= 1 || heightNum >= 1 || svgCanvas.getCurrentMode() === 'image'
+      // const id = element.getAttribute('id')
+      // const el = document.querySelector('[data-image-id=' + id + ']')
+      // svgCanvas.assignAttributes(el, { x: element.x, y: element.y })
     }
       break
     case 'circle':
@@ -954,6 +1013,7 @@ const dblClickEvent = (evt) => {
  * @returns {void}
  */
 const mouseDownEvent = (evt) => {
+  // console.warn(svgCanvas.getCurrentMode())
   const dataStorage = svgCanvas.getDataStorage()
   const selectedElements = svgCanvas.getSelectedElements()
   const zoom = svgCanvas.getZoom()
@@ -1086,6 +1146,12 @@ const mouseDownEvent = (evt) => {
           height: 0,
           display: 'inline'
         }, 100)
+        selectedElements.forEach((el) => {
+          const id = el.getAttribute('id')
+          const element = document.querySelector('[data-image-id=' + id + ']')
+          const bbox = svgCanvas.getBBox(element)
+          svgCanvas.assignAttributes(element, { x: el.getAttribute('x'), y: (el.getAttribute('y') - (bbox.height / 2)) })
+        })
       }
       break
     case 'zoom':
@@ -1176,10 +1242,28 @@ const mouseDownEvent = (evt) => {
       setHref(newImage, svgCanvas.getLastGoodImgUrl())
       preventClickDefault(newImage)
       break
-    } case 'square':
+    }
     // TODO: once we create the rect, we lose information that this was a square
     // (for resizing purposes this could be important)
     // Fallthrough
+    /* case 'annotate':
+      svgCanvas.setStarted(true)
+      svgCanvas.setStartX(x)
+      svgCanvas.setStartY(y)
+      svgCanvas.addSVGElementsFromJson({
+        element: 'rect',
+        curStyles: true,
+        attr: {
+          x,
+          y,
+          width: 0,
+          height: 0,
+          id: svgCanvas.getNextId(),
+          opacity: curShape.opacity / 2
+        }
+      })
+      break */
+    case 'square':
     case 'rect':
       svgCanvas.setStarted(true)
       svgCanvas.setStartX(x)

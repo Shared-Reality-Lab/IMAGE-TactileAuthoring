@@ -175,23 +175,24 @@ export default class ConfigObj {
       * @type {string[]}
     */
     this.defaultExtensions = [
-      'ext-connector',
-      'ext-eyedropper',
-      'ext-tactile-render',
-      'ext-tactile',
-      'ext-guidance',
-      'ext-label',
-      'ext-zoom_lvl',
-      'ext-grid',
+      //'ext-connector',
+      //'ext-eyedropper',
+      //'ext-tactile-render',
+      //'ext-tactile',
+      //'ext-guidance',
+      //'ext-label',
+      //'ext-zoom_lvl',
+      //'ext-grid',
       // 'ext-imagelib',
       // 'ext-arrows',
-      'ext-markers',
+      //'ext-markers',
       // 'ext-overview_window', disabled until we fix performance issue
-      'ext-panning',
-      'ext-shapes',
-      'ext-polystar',
-      'ext-storage',
-      'ext-opensave'
+      //'ext-panning',
+      //'ext-shapes',
+      //'ext-polystar',
+      //'ext-storage',
+      'ext-opensave',
+      'ext-annotate'
     ]
     this.curConfig = {
       // We do not put on defaultConfig to simplify object copying

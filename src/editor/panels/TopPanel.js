@@ -155,7 +155,7 @@ class TopPanel {
       $id('elem_class').value = this.selectedElement.getAttribute('class') ?? ''
     }
 
-    this.editor.bottomPanel.updateToolButtonState()
+    //this.editor.bottomPanel.updateToolButtonState()
   }
 
   /**

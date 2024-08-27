@@ -601,6 +601,50 @@ const setSvgString = (xmlString, preventUndo) => {
     return false
   }
 
+  const layers = document.querySelectorAll('[data-image-layer]')
+  layers.forEach(layer => {
+    if (layer.hasChildNodes) {
+      svgCanvas.setCurrentLayer(layer.getAttribute('data-image-layer'))
+      const children = layer.childNodes
+      for (let i = 0; i < children.length; i++) {
+        const element = children[i]
+        if (element.nodeName === 'rect') {
+          const curShape = svgCanvas.getStyle()
+          const x = element.getAttribute('x')
+          let y = element.getAttribute('y')
+          svgCanvas.addSVGElementsFromJson({
+            element: 'text',
+            curStyles: true,
+            attr: {
+              x,
+              y,
+              id: svgCanvas.getNextId(),
+              fill: svgCanvas.getCurText('fill'),
+              'stroke-width': svgCanvas.getCurText('stroke_width'),
+              'font-size': svgCanvas.getCurText('font_size'),
+              'font-family': svgCanvas.getCurText('font_family'),
+              'text-anchor': 'start',
+              'xml:space': 'preserve',
+              'data-image-id': element.getAttribute('id'),
+              opacity: curShape.opacity
+            }
+          })
+          const el = svgCanvas.getElement(svgCanvas.getId())
+          const bbox = svgCanvas.getBBox(el)
+          y = y - (bbox.height / 2)
+          svgCanvas.assignAttributes(el,
+            { y }
+          )
+          if (element.hasAttribute('aria-label')) {
+            el.textContent = element.getAttribute('aria-label')
+          } else {
+            el.textContent = '<Untitled>'
+          }
+        }
+      }
+    }
+  })
+
   return true
 }
 

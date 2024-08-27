@@ -87,9 +87,9 @@ export class SeLabelDialog extends HTMLElement {
           // console.warn(svgEditor.svgCanvas.getSelectedElements()[0])
           element = document.getElementById(svgEditor.svgCanvas.getSelectedElements()[0].id)
 
-          if (element.hasAttribute('data-image-label'))
+          if (element.hasAttribute('aria-label'))
             {
-              this.$shortLabel.value= element.getAttribute('data-image-label')
+              this.$shortLabel.value= element.getAttribute('aria-label')
             }else{
             this.$shortLabel.value = ''}
         } else {
@@ -124,12 +124,12 @@ connectedCallback () {
   const onSaveHandler = () => {
       const element = document.getElementById(svgEditor.svgCanvas.getSelectedElements()[0].id)
       // console.warn(element.nodeName)
-      element.setAttribute('data-image-label', this.$shortLabel.value)
+      element.setAttribute('aria-label', this.$shortLabel.value)
       document.getElementById('se-label-dialog').setAttribute('dialog', 'close')
       let label;
       //let element = svgEditor.svgCanvas.getElement(svgEditor.svgCanvas.getId())
       if (this.$shortLabel.value!='')
-        label= element.getAttribute('data-image-label')
+        label= element.getAttribute('aria-label')
       else
         label = '\<Untitled\>'
       if (!this.modifying)

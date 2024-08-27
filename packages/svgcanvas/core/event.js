@@ -751,17 +751,6 @@ const mouseUpEvent = (evt) => {
       keep = (x1 !== x2 || y1 !== y2)
     }
       break
-    /* case 'annotate':{
-      const width = element.getAttribute('width')
-      const height = element.getAttribute('height')
-      const widthNum = Number(width)
-      const heightNum = Number(height)
-      keep = widthNum >= 1 || heightNum >= 1
-      if (!element.hasAttribute('data-image-label')) {
-        console.warn('Execute label entry')
-      }
-    }
-      break */
     case 'foreignObject':
     case 'square':
     case 'rect':

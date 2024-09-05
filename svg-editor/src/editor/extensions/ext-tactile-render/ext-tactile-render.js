@@ -162,6 +162,9 @@ connectedCallback () {
       console.warn(xhr.responseText);
       $id('se-prompt-dialog').title = xhr.responseText;
       $id('se-prompt-dialog').setAttribute('close', false)
+      setTimeout(() => {
+        $id('se-prompt-dialog').setAttribute('close', true)
+      }, 1000);
     }};
     
     xhr.send(JSON.stringify({"data": "data:image/svg+xml;base64,"+window.btoa(svgString), 

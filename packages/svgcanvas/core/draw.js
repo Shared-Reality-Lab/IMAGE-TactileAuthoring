@@ -523,6 +523,7 @@ export class Drawing {
             if (child.tagName === 'g') {
               layer = new Layer(name, child)
             } else {
+              console.warn(child)
               child.removeAttribute('data-image-layer')
               layer = new Layer(name, child, this.svgElem_)
               layer.appendChildren([child])

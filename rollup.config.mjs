@@ -16,6 +16,7 @@ import dynamicImportVars from '@rollup/plugin-dynamic-import-vars'
 import terser from '@rollup/plugin-terser'
 // import progress from 'rollup-plugin-progress';
 import filesize from 'rollup-plugin-filesize'
+import replace from '@rollup/plugin-replace'
 
 // utility function
 const getDirectories = source => {
@@ -26,6 +27,9 @@ const getDirectories = source => {
     .map(name => path.join(source, name))
     .filter(i => isDirectory(i))
 }
+
+const serverUrl = process.env.SERVER_URL;
+console.log('Server URL:', serverUrl);
 
 // capture the list of files to build for extensions and ext-locales
 const extensionDirs = getDirectories('src/editor/extensions')
@@ -63,6 +67,10 @@ const config = [
       }
     ],
     plugins: [
+      replace({
+        preventAssignment: true,
+        'process.env.SERVER_URL': JSON.stringify(process.env.SERVER_URL),
+      }),
       copy({
         targets: [
           {

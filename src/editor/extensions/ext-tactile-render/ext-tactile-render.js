@@ -315,9 +315,9 @@ connectedCallback () {
     svgString = await encryptData(svgEditor, svgString)
 
     if (graphicId == ""){
-      xhr.open("POST", "https://monarch.unicorn.cim.mcgill.ca/create");
+      xhr.open("POST", svgEditor.server + "create");
     } else {
-      xhr.open("POST", "https://monarch.unicorn.cim.mcgill.ca/update/"+graphicId);
+      xhr.open("POST", svgEditor.server + "update/" + graphicId);
     }
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Access-Control-Allow-Origin", '*');

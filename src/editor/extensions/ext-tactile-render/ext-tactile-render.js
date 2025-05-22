@@ -167,9 +167,9 @@ connectedCallback () {
     svgDoc.querySelectorAll('g[data-image-layer] title').forEach(e => e.remove())
     svgString = new XMLSerializer().serializeToString(svgDoc)
     if (graphicId == ""){
-      xhr.open("POST", "https://monarch.unicorn.cim.mcgill.ca/create");
+      xhr.open("POST", "https://unicorn.cim.mcgill.ca/image/monarch/create");
     } else {
-      xhr.open("POST", "https://monarch.unicorn.cim.mcgill.ca/update/"+graphicId);
+      xhr.open("POST", "https://unicorn.cim.mcgill.ca/image/monarch/update/"+graphicId);
     }
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Access-Control-Allow-Origin", '*');

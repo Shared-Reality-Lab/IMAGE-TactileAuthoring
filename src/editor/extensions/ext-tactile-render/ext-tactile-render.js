@@ -21,7 +21,7 @@ var secretKey = ""
 var graphic = ""
 var coords = ""
 var placeId = ""
-var serverUrl= process.env.SERVER_URL
+ //process.env.SERVER_URL
 
 const loadExtensionTranslation = async function (svgEditor) {
   let translationModule
@@ -314,7 +314,7 @@ connectedCallback () {
     svgString = window.btoa(Uint8ToString(concatenatedArray));
     */
     svgString = await encryptData(svgEditor, svgString)
-
+    var serverUrl= svgEditor.server
     if (graphicId == ""){
       xhr.open("POST", serverUrl + "monarch/create");
     } else {

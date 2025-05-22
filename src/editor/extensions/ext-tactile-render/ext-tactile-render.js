@@ -21,7 +21,15 @@ var secretKey = ""
 var graphic = ""
 var coords = ""
 var placeId = ""
- //process.env.SERVER_URL
+var serverUrl= ""
+
+fetch('./config.json')
+  .then(res => res.json())
+  .then(config => {
+    console.warn('SERVER_URL is', config.SERVER_URL);
+    // use it here
+    serverUrl = config.SERVER_URL
+  });
 
 const loadExtensionTranslation = async function (svgEditor) {
   let translationModule
@@ -314,7 +322,7 @@ connectedCallback () {
     svgString = window.btoa(Uint8ToString(concatenatedArray));
     */
     svgString = await encryptData(svgEditor, svgString)
-    var serverUrl= svgEditor.server
+
     if (graphicId == ""){
       xhr.open("POST", serverUrl + "monarch/create");
     } else {

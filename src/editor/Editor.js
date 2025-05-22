@@ -324,7 +324,7 @@ class Editor extends EditorStartup {
     // Add empty password
     this.password = null
 
-    this.server = process.env.SERVER_URL; 
+    // this.server = process.env.SERVER_URL; 
 
     // Add empty ID and secret key
     // this.graphicId = ""// Math.random().toString().replace('9', '').substring(2, 8)

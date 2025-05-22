@@ -67,10 +67,10 @@ const config = [
       }
     ],
     plugins: [
-      replace({
+      /*replace({
         preventAssignment: true,
         'process.env.SERVER_URL': JSON.stringify(process.env.SERVER_URL),
-      }),
+      }),*/
       copy({
         targets: [
           {

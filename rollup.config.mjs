@@ -28,8 +28,8 @@ const getDirectories = source => {
     .filter(i => isDirectory(i))
 }
 
-const serverUrl = process.env.SERVER_URL;
-console.log('Server URL:', serverUrl);
+/*const serverUrl = process.env.SERVER_URL;
+console.log('Server URL:', serverUrl);*/
 
 // capture the list of files to build for extensions and ext-locales
 const extensionDirs = getDirectories('src/editor/extensions')

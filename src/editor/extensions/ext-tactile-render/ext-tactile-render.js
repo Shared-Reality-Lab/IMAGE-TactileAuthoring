@@ -21,6 +21,7 @@ var secretKey = ""
 var graphic = ""
 var coords = ""
 var placeId = ""
+var serverUrl = window.APP_CONFIG?.serverUrl
 
 const loadExtensionTranslation = async function (svgEditor) {
   let translationModule
@@ -315,9 +316,9 @@ connectedCallback () {
     svgString = await encryptData(svgEditor, svgString)
 
     if (graphicId == ""){
-      xhr.open("POST", svgEditor.server + "create");
+      xhr.open("POST", serverUrl + "monarch/create");
     } else {
-      xhr.open("POST", svgEditor.server + "update/" + graphicId);
+      xhr.open("POST", serverUrl + "monarch/update/" + graphicId);
     }
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Access-Control-Allow-Origin", '*');

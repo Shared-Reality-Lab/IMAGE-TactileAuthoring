@@ -21,15 +21,7 @@ var secretKey = ""
 var graphic = ""
 var coords = ""
 var placeId = ""
-var serverUrl= ""
-
-fetch('./config.json')
-  .then(res => res.json())
-  .then(config => {
-    console.warn('SERVER_URL is', config.SERVER_URL);
-    // use it here
-    serverUrl = config.SERVER_URL
-  });
+var serverUrl = window.APP_CONFIG?.serverUrl
 
 const loadExtensionTranslation = async function (svgEditor) {
   let translationModule

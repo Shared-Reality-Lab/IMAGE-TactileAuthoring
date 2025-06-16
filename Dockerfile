@@ -9,3 +9,12 @@ COPY . /app
 
 # Install dependencies
 RUN npm install
+
+# Set npm to ignore scripts
+ENV npm_config_ignore_scripts=true
+
+# Run build manually ignoring scripts
+WORKDIR /app/packages/svgcanvas
+RUN npx rollup -c
+WORKDIR /app
+RUN npx rollup -c

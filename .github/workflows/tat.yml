@@ -4,9 +4,9 @@ on:
     branches: [ main ]
     tags: [ "tat-[0-9]+.[0-9]+.[0-9]+" ]
     paths: [ "**" ]
-  pull_request:
-    branches: [ main ]
-    paths: [ "**" ]
+  # pull_request:
+  #   branches: [ main ]
+  #   paths: [ "**" ]
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
@@ -63,3 +63,18 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  trigger-tat-service:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger TAT Service Workflow
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+          owner: Shared-Reality-Lab
+          repo: IMAGE-server
+          workflow_id: tat-service.yml
+          ref: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET }}

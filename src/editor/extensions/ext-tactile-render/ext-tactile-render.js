@@ -254,7 +254,7 @@ connectedCallback () {
       }
       svgDoc.querySelector('g[data-image-layer="fullImage"]').remove()
     }
-    svgString = new XMLSerializer().serializeToString(svgDoc)
+    svgString = new XMLSerializer().serializeToString(svgDoc).replaceAll('display="inline"', "")
     
     /*const password = svgEditor.password
 
